@@ -54,7 +54,33 @@ const Pesquisar = styled.div`
 const Logo = styled.img`
   width: 100px;
 `
-  
+
+const Login = styled.div`
+    min-height: 80px;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    .p2{
+        display:none;
+    }
+    .p3{
+        display:none;
+    }
+    :hover{
+        .p1{
+        transition: 0.8s;
+        display:none;
+        }
+        .p2{
+        display:block;
+        margin: 0;
+        }
+        .p3{
+        display:block;
+        margin: 0;
+        }
+    }
+`
 
 class Header extends React.Component{
   render() {
@@ -68,7 +94,11 @@ class Header extends React.Component{
         <LoginCarrinho>
           <div>
             <img src={login} alt="login" />
-            <p><span>Minha Conta</span></p>
+            <Login>
+                <p className='p1'>Minha conta</p>
+                <p className='p2'>Login</p>
+                <p className='p3'> Criar conta</p>
+            </Login>
           </div>
           <button>
             <img src={carrinho} alt="carrinho de compras" />
