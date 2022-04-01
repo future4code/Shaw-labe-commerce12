@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import Header from "./components/Header";
+import { Carrinho } from './components/Carrinho';
 import Cards from './components/cards';
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
@@ -42,6 +44,7 @@ class App extends React.Component {
 
     const listaDeCards = this.state.cards.map((card) => {
       return (
+
           <Cards
           fotoProduto = {card.fotoProduto}
           fotoEstampa ={card.fotoEstampa}
@@ -53,6 +56,7 @@ class App extends React.Component {
 
     return (
         <CardContainer>
+          <Header />
           {listaDeCards}    
         </CardContainer>
     );
