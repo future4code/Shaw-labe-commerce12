@@ -1,11 +1,6 @@
-
 import React from "react";
 import Header from "./components/Header";
-
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Carrinho } from './Components/Carrinho';
+import { Carrinho } from './components/Carrinho';
 import styled from 'styled-components'
 
 
