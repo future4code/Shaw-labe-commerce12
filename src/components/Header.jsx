@@ -9,6 +9,7 @@ import carrinho from "../img/carrinho.png";
 
 const MainContainer = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 0 100px;
@@ -22,6 +23,7 @@ const LoginCarrinho = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 250px;
+  margin-right: 15px;
 
   div{
     display: flex;
@@ -40,6 +42,7 @@ const LoginCarrinho = styled.div`
 
 const Pesquisar = styled.div`
   display: flex;
+  margin-left: 15px;
 
   img{
     width: 20px;
