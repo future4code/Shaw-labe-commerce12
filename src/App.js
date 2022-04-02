@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
-import Header from "./components/Header";
-import { Carrinho } from './components/Carrinho';
-import Filtros from './components/filtro';
-import Cards from './components/cards';
+import Header from './Components/Header';
+import {Carrinho} from "./Components/Carrinho"
+import Filtros from './Components/Filtros';
+import Cards from './Components/Cards';
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
 import card2 from './img_cards/Card2.png'
@@ -32,56 +32,88 @@ const CardContainer = styled.div`
     justify-content: center;
 `
 
+
+
+const produto = [
+  {
+        id:1,
+        fotoProduto: card1,
+        fotoEstampa: estampaCard1,
+        descricao:'Camiseta Branca Astronauta - Masculina',
+        preco:'80'
+
+  },
+  {
+        id:4,
+        fotoProduto: card3,
+        fotoEstampa: estampaCard3,
+        descricao:'Camiseta Preta Astronauta - Feminina',
+        preco:'83',
+        quantidade: 6
+  }
+]
+
+
+
+
 class App extends React.Component {
   state= {
+    
     cards:[
-      {
+      { id:1,
         fotoProduto: card1,
         fotoEstampa: estampaCard1,
         descricao:'Camiseta Branca Astronauta - Masculina',
         preco:'80',
       },
-      {
+      { id:2,
         fotoProduto: card2,
         fotoEstampa: estampaCard2,
         descricao:'Camiseta Branca Astronauta - Feminina',
         preco:'81',
+        quantidade: 1
       },
-      {
+      { id:3,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'82',
+        quantidade: 3
       },
-      {
+      { id:4,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'83',
+        quantidade: 6
       },
-      {
+      { id:5,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'84',
+        quantidade: 2
       },
-      {
+      { id:6,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'85',
+        quantidade: 3
       },
-      {
+      { id:7,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'86',
+        quantidade: 5
       },
-      {
+      { id:8,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
         descricao:'Camiseta Preta Astronauta - Feminina',
         preco:'87',
+        quantidade: 10
       },
     ],
     precoMin: "",
@@ -93,7 +125,48 @@ class App extends React.Component {
   }
   updatePrecoMax = (dig) => {
     this.setState({precoMax: dig.target.value})
+  };
+
+  onAddProductToCart = (produtoId) => {
+    const productInCart = this.state.cards.find(produto => produtoId === produto.id)
+
+    if(productInCart) {
+      const newProductsInCart = this.state.cards.map(produto => {
+        if(produtoId === produto.id) {
+          return {
+            ...produto,
+            quantidade: produto.quantidade + 1
+          }
+        }
+
+        return produto
+      })
+
+      this.setState({productsInCart: newProductsInCart})
+    } else {
+      const productToAdd = produtoId.find(produto => produtoId === produto.id)
+
+      const newProductsInCart = [...this.state.cards, {...productToAdd, quantity: 1}]
+
+      this.setState({productsInCart: newProductsInCart})
+    }
   }
+
+  onRemoveProductFromCart = (produtoId) => {
+    const newProductsInCart = this.state.cards.map((produto) => {
+      if(produto.id === produtoId) {
+        return {
+          ...produto,
+          quantity: produto.quantity - 1
+        }
+      }
+      return produto
+    }).filter((produto) => produto.quantity > 0)
+
+    this.setState({productsInCart: newProductsInCart})
+  }
+ 
+  
 
   render(){
 
@@ -109,14 +182,15 @@ class App extends React.Component {
           fotoEstampa ={card.fotoEstampa}
           descricao = {card.descricao}
           preco = {card.preco}
+          onAddProductToCart={this.onAddProductToCart}
           />  
       )
     });
 
     return (
-      <MainContainer>
-        <Header />
-        <Main>
+      <MainContainer >
+        <Header/>
+        <Main >
           <Filtros
             precoMin= {this.state.precoMin}
             precoMaxn= {this.state.precoMax}
@@ -124,8 +198,12 @@ class App extends React.Component {
             updatePrecoMax={this.updatePrecoMax}
           />
           <CardContainer>
+            
             {listaFiltrada} 
           </CardContainer>
+          <Carrinho 
+          productInCart={this.state.cards}
+          onRemoveProductFromCart={this.onRemoveProductFromCart} />
         </Main>  
       </MainContainer>  
     );
