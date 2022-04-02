@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
-import Header from "./components/Header";
-import { Carrinho } from './components/Carrinho';
-import Filtros from './components/filtro';
-import Cards from './components/cards';
+import Header from './Components/Header'
+import {Carrinho} from './Components/Carrinho'
+import Filtros from './Components/filtro'
+import Cards from './Components/cards'
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
 import card2 from './img_cards/Card2.png'
@@ -86,6 +86,7 @@ class App extends React.Component {
     ],
     precoMin: "",
     precoMax: "",
+    inputPesquisar: '',
   }
 
   updatePrecoMin = (dig) => {
@@ -95,12 +96,18 @@ class App extends React.Component {
     this.setState({precoMax: dig.target.value})
   }
 
+  updatePesquisar = (dig) => {
+    this.setState({ inputPesquisar: dig.target.value})
+  }
+
   render(){
 
     const listaFiltrada = this.state.cards.filter((card) => {
       return this.state.precoMin === "" || card.preco >= this.state.precoMin
     }).filter((card) => {
       return this.state.precoMax === "" || card.preco <= this.state.precoMax
+    }).filter((card) => {
+      return card.descricao.toLowerCase().includes(this.state.inputPesquisar.toLowerCase())
     }).map((card) => {
       return (
 
@@ -115,8 +122,11 @@ class App extends React.Component {
 
     return (
       <MainContainer>
-        <Header />
-        <Main>
+        <Header 
+          inputPesquisar = {this.state.inputPesquisar}
+          updatePesquisar = {this.updatePesquisar}
+          />
+          <Main>
           <Filtros
             precoMin= {this.state.precoMin}
             precoMaxn= {this.state.precoMax}
