@@ -15,7 +15,6 @@ const MainContainer = styled.div`
   padding: 0 100px;
   background-color: #b8b8b7;
   height: 100px;
-  
 `
 
 const LoginCarrinho = styled.div`
@@ -91,16 +90,21 @@ class Header extends React.Component{
       <MainContainer>
         <Pesquisar>
           <img src={lupa} alt="pesquisar" />
-          <input type="text" placeholder="Pesquisar" />
+          <input
+            type="text"
+            value={this.props.inputPesquisar}
+            onChange={this.props.updatePesquisar}
+            placeholder="Pesquisar"
+          />
         </Pesquisar>
         <Logo src={logo} alt="logo" />
         <LoginCarrinho>
           <div>
             <img src={login} alt="login" />
             <Login>
-                <p className='p1'>Minha conta</p>
-                <p className='p2'>Login</p>
-                <p className='p3'> Criar conta</p>
+              <p className="p1">Minha conta</p>
+              <p className="p2">Login</p>
+              <p className="p3"> Criar conta</p>
             </Login>
           </div>
           <button>
