@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from 'styled-components'
 import Header from './Components/Header'
+
 import Carrinho from './Components/Carrinho'
 import Filtros from './Components/Filtros';
 import Cards from './Components/Cards'
+
+import {Carrinho} from './Components/Carrinho'
+import Filtros from './Components/filtro'
+import Cards from './Components/cards'
+
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
 import card2 from './img_cards/Card2.png'
 import estampaCard2 from './img_cards/Estampa_Card2.png'
 import card3 from './img_cards/Card3.png'
 import estampaCard3 from './img_cards/Estampa_Card3.png'
+import OrdenacaoPreco from './Components/OrdenacaoPreco';
 
 
 const MainContainer = styled.div`
@@ -33,62 +40,100 @@ const CardContainer = styled.div`
     justify-content: center;
 `
 
+
+
 class App extends React.Component {
-  state= {
-    cards:[
+  state = {
+    cards: [
       {
         id:1,
         fotoProduto: card1,
         fotoEstampa: estampaCard1,
+
         descricao:'Astronauta Triangulo',
         preco:80,
+
+        descricao: "Camiseta Branca Astronauta - Masculina",
+        preco: "100",
+
       },
       {
         id:2,
         fotoProduto: card2,
         fotoEstampa: estampaCard2,
+
         descricao:'Astronauta Balão',
         preco:81,
+
+        descricao: "Camiseta Branca Astronauta - Feminina",
+        preco: "81",
+
       },
       {
         id:3,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco:82,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "90",
+
       },
       {
         id:4,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco:83,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "83",
+
       },
       {
         id:5,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco:84,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "84",
+
       },
       {
         id:6,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco:85,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "85",
+
       },
       {
         id:7,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco: 86,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "86",
+
       },
       {
         id:8,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
+
         descricao:'Astronauta Azul',
         preco: 87,
       },
@@ -99,10 +144,15 @@ class App extends React.Component {
         descricao:'Astronauta Azul',
         preco: 87,
         quantia: 1,
+
+        descricao: "Camiseta Preta Astronauta - Feminina",
+        preco: "87",
+
       },
     ],
     precoMin: "",
     precoMax: "",
+
     carrinhoHeader: false,
   }
 
@@ -111,12 +161,17 @@ class App extends React.Component {
     // console.log(this.state.carrinhoHeader)
   }
 
+    inputPesquisar: "",
+    ordenacaoPreco: "",
+  };
+
+
   updatePrecoMin = (dig) => {
-    this.setState({precoMin: dig.target.value})
-  }
+    this.setState({ precoMin: dig.target.value });
+  };
   updatePrecoMax = (dig) => {
-    this.setState({precoMax: dig.target.value})
-  }
+    this.setState({ precoMax: dig.target.value });
+  };
 
   adicionarItem = (id) =>{
     const produtoNoCarrinho = this.state.listaDeCompras.find(produto => id === produto.id)
@@ -159,14 +214,41 @@ class App extends React.Component {
 
   render(){
 
-    const listaFiltrada = this.state.cards.filter((card) => {
-      return this.state.precoMin === "" || card.preco >= this.state.precoMin
-    }).filter((card) => {
-      return this.state.precoMax === "" || card.preco <= this.state.precoMax
-    }).map((card) => {
-      return (
+  updatePesquisar = (dig) => {
+    this.setState({ inputPesquisar: dig.target.value });
+  };
 
+
+  updateOrdenacaoPreco = (event) => {
+    this.setState({ ordenacaoPreco: event.target.value})
+  }
+
+  render() {
+    const listaFiltrada = this.state.cards
+      .filter((card) => {
+        return this.state.precoMin === "" || card.preco >= this.state.precoMin;
+      })
+      .filter((card) => {
+        return this.state.precoMax === "" || card.preco <= this.state.precoMax;
+      })
+      .filter((card) => {
+        return card.descricao
+          .toLowerCase()
+          .includes(this.state.inputPesquisar.toLowerCase());
+      }).sort((precoAtual, proximoPreco) => {
+        switch (this.state.ordenacaoPreco) {
+          case "precoMenor":
+            return precoAtual.preco - proximoPreco.preco
+          case "precoMaior":
+            return proximoPreco.preco - precoAtual.preco
+          default:
+            return  this.state.preco
+        }
+      })
+      .map((card) => {
+        return (
           <Cards
+
           id = {card.id}
           fotoProduto = {card.fotoProduto}
           fotoEstampa ={card.fotoEstampa}
@@ -183,13 +265,36 @@ class App extends React.Component {
           onClickCarrinho={this.onClickCarrinho}
           carrinhoHeader={this.state.carrinhoHeader}
         />
+
+            fotoProduto={card.fotoProduto}
+            fotoEstampa={card.fotoEstampa}
+            descricao={card.descricao}
+            preco={card.preco}
+          />
+        );
+      });
+
+      console.log(this.state.ordenacaoPreco)
+
+    return (
+      <MainContainer>
+        <Header
+          inputPesquisar={this.state.inputPesquisar}
+          updatePesquisar={this.updatePesquisar}
+        />
+        <OrdenacaoPreco 
+          ordenacaoPreco={this.state.ordenacaoPreco}
+          updateOrdenacaoPreco={this.updateOrdenacaoPreco}
+        />       
+
         <Main>
           <Filtros
-            precoMin= {this.state.precoMin}
-            precoMaxn= {this.state.precoMax}
+            precoMin={this.state.precoMin}
+            precoMaxn={this.state.precoMax}
             updatePrecoMin={this.updatePrecoMin}
             updatePrecoMax={this.updatePrecoMax}
           />
+
           <CardContainer>
             {listaFiltrada} 
           </CardContainer>
@@ -200,8 +305,13 @@ class App extends React.Component {
           />
         </Main>  
       </MainContainer>  
+
+          <CardContainer>{listaFiltrada}</CardContainer>
+        </Main>
+      </MainContainer>
+
     );
-  } 
+  }
 }
 
 export default App;

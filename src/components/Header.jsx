@@ -15,7 +15,6 @@ const MainContainer = styled.div`
   padding: 0 100px;
   background-image:url(https://thumbs.dreamstime.com/b/cen%C3%A1rio-estrelado-de-espa%C3%A7o-wallpaper-c%C3%B3smico-profundo-amplo-cosmos-com-estrelas-brilhantes-belo-universo-constela%C3%A7%C3%A3o-textura-218573124.jpg);
   height: 100px;
-  
 `
 
 const LoginCarrinho = styled.div`
@@ -92,16 +91,21 @@ class Header extends React.Component{
       <MainContainer>
         <Pesquisar>
           <img src={lupa} alt="pesquisar" />
-          <input type="text" placeholder="Pesquisar" />
+          <input
+            type="text"
+            value={this.props.inputPesquisar}
+            onChange={this.props.updatePesquisar}
+            placeholder="Pesquisar"
+          />
         </Pesquisar>
         <Logo src={logo} alt="logo" />
         <LoginCarrinho>
           <div>
             <img src={login} alt="login" />
             <Login>
-                <p className='p1'>Minha conta</p>
-                <p className='p2'>Login</p>
-                <p className='p3'> Criar conta</p>
+              <p className="p1">Minha conta</p>
+              <p className="p2">Login</p>
+              <p className="p3"> Criar conta</p>
             </Login>
           </div>
           <button>
