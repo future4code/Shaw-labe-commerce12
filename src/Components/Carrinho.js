@@ -1,52 +1,54 @@
 import React from 'react';
 import styled from 'styled-components'
-import { ItemNoCarrinho } from './ItemNoCarrinho';
+import ItensCarrinho from './ItemNoCarrinho' 
 
-const BoxCarrinho = styled.div`
-display: flex;
-border: 1px solid white;
-width: 18.75rem;
-height: 30rem;
-justify-content: center;
-color: white;
-
+const ContainerCarrinho = styled.div`
+    display: ${(props) => props.mostrar === false ? 'none' : 'flex'};  
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-items: center;
+    width: 350px;
+    min-height: 50px;
+    max-height: 450px;
+    background-color: #444444;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 30px;
+    margin-right: 30px;
+    h3{
+        margin:0;
+    }
 `
 
-const ItemCarrinho = styled.div`
+class Carrinho extends React.Component {
+    state = {}
 
-display: flex;
-border: 1px solid green;
-width: 200px;
-margin: 40px;
+    totalCompra = () => {
+        let valorTotal = 0
 
-
-`
-
-
-
-
-export class Carrinho extends React.Component{
-    getValorTotal = () => {
-        let ValorTotal = 0
-    
-        for(let produto of this.props.cards) {
-          ValorTotal += produto.preco * produto.quantidade
+        for(let produto of this.props.listaDeCompras) {
+            valorTotal += produto.preco * produto.quantia
+            // console.log(this.props.carrinhoHeader)
         }
+        return valorTotal
+    }
     
-        return ValorTotal
-      }
-   
-        
-    
-    render(){
-        return <BoxCarrinho>
-            <h4>Carrinho</h4>
-           
+    render() {
 
-
-
-
-
-        </BoxCarrinho>
+        return(
+            <ContainerCarrinho mostrar={this.props.carrinhoHeader}>
+                <h3>Carrinho</h3>
+                    {this.props.listaDeCompras.map((produto) =>{
+                        return <ItensCarrinho
+                            item ={produto}
+                            removeItem={this.props.removeItem}
+                        />
+                    })}
+                <p>Valor Total: R${this.totalCompra()},00</p>
+            </ContainerCarrinho>
+        )
     }
 }
+
+export default Carrinho

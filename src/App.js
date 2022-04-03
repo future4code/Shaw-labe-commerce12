@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components'
-import Header from './Components/Header';
-import {Carrinho} from "./Components/Carrinho"
+import Header from './Components/Header'
+import Carrinho from './Components/Carrinho'
 import Filtros from './Components/Filtros';
-import Cards from './Components/Cards';
+import Cards from './Components/Cards'
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
 import card2 from './img_cards/Card2.png'
 import estampaCard2 from './img_cards/Estampa_Card2.png'
 import card3 from './img_cards/Card3.png'
 import estampaCard3 from './img_cards/Estampa_Card3.png'
+
 
 const MainContainer = styled.div`
     display: flex;
@@ -21,7 +22,7 @@ const Main =styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color:#1e1e1e;
+  background-image: url(https://wallpaperaccess.com/full/1219623.jpg);
 `
 
 const CardContainer = styled.div`
@@ -32,92 +33,82 @@ const CardContainer = styled.div`
     justify-content: center;
 `
 
-
-
-const produto = [
-  {
+class App extends React.Component {
+  state= {
+    cards:[
+      {
         id:1,
         fotoProduto: card1,
         fotoEstampa: estampaCard1,
-        descricao:'Camiseta Branca Astronauta - Masculina',
-        preco:'80'
-
-  },
-  {
+        descricao:'Astronauta Triangulo',
+        preco:80,
+      },
+      {
+        id:2,
+        fotoProduto: card2,
+        fotoEstampa: estampaCard2,
+        descricao:'Astronauta Balão',
+        preco:81,
+      },
+      {
+        id:3,
+        fotoProduto: card3,
+        fotoEstampa: estampaCard3,
+        descricao:'Astronauta Azul',
+        preco:82,
+      },
+      {
         id:4,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'83',
-        quantidade: 6
-  }
-]
-
-
-
-
-class App extends React.Component {
-  state= {
-    
-    cards:[
-      { id:1,
-        fotoProduto: card1,
-        fotoEstampa: estampaCard1,
-        descricao:'Camiseta Branca Astronauta - Masculina',
-        preco:'80',
+        descricao:'Astronauta Azul',
+        preco:83,
       },
-      { id:2,
-        fotoProduto: card2,
-        fotoEstampa: estampaCard2,
-        descricao:'Camiseta Branca Astronauta - Feminina',
-        preco:'81',
-        quantidade: 1
-      },
-      { id:3,
+      {
+        id:5,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'82',
-        quantidade: 3
+        descricao:'Astronauta Azul',
+        preco:84,
       },
-      { id:4,
+      {
+        id:6,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'83',
-        quantidade: 6
+        descricao:'Astronauta Azul',
+        preco:85,
       },
-      { id:5,
+      {
+        id:7,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'84',
-        quantidade: 2
+        descricao:'Astronauta Azul',
+        preco: 86,
       },
-      { id:6,
+      {
+        id:8,
         fotoProduto: card3,
         fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'85',
-        quantidade: 3
+        descricao:'Astronauta Azul',
+        preco: 87,
       },
-      { id:7,
-        fotoProduto: card3,
-        fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'86',
-        quantidade: 5
-      },
-      { id:8,
-        fotoProduto: card3,
-        fotoEstampa: estampaCard3,
-        descricao:'Camiseta Preta Astronauta - Feminina',
-        preco:'87',
-        quantidade: 10
+    ],
+    listaDeCompras: [
+      {
+        id:8,
+        descricao:'Astronauta Azul',
+        preco: 87,
+        quantia: 1,
       },
     ],
     precoMin: "",
     precoMax: "",
+    carrinhoHeader: false,
+  }
+
+  onClickCarrinho = () => {
+    this.setState({carrinhoHeader: !this.state.carrinhoHeader})
+    // console.log(this.state.carrinhoHeader)
   }
 
   updatePrecoMin = (dig) => {
@@ -125,48 +116,46 @@ class App extends React.Component {
   }
   updatePrecoMax = (dig) => {
     this.setState({precoMax: dig.target.value})
-  };
+  }
 
-  onAddProductToCart = (produtoId) => {
-    const productInCart = this.state.cards.find(produto => produtoId === produto.id)
+  adicionarItem = (id) =>{
+    const produtoNoCarrinho = this.state.listaDeCompras.find(produto => id === produto.id)
+    // esta const captura os valores do objeto com o id correto, podemos ver isso no console
+    // console.log(produtoNoCarrinho)
 
-    if(productInCart) {
-      const newProductsInCart = this.state.cards.map(produto => {
-        if(produtoId === produto.id) {
+    if (produtoNoCarrinho) { // depois de termos esse valor fazemos duas avaliações
+      const novaListaCompras = this.state.listaDeCompras.map((produto) => {
+        if( id === produto.id){     // na primeira vemos se o item ja esta no carrinho de compras
           return {
-            ...produto,
-            quantidade: produto.quantidade + 1
+            ...produto, // então retornamos ele de volta a lista
+            quantia: produto.quantia+1 // acrescentando 1 na quantia
           }
         }
-
-        return produto
-      })
-
-      this.setState({productsInCart: newProductsInCart})
-    } else {
-      const productToAdd = produtoId.find(produto => produtoId === produto.id)
-
-      const newProductsInCart = [...this.state.cards, {...productToAdd, quantity: 1}]
-
-      this.setState({productsInCart: newProductsInCart})
+        return produto       
+    })
+    this.setState({listaDeCompras: novaListaCompras})
+    } else { // o segundo caso acontece caso o item não seja repetido
+      const produtoEscolhido = this.state.cards.find(produto => id === produto.id)
+      // então buscamos na lista geral de produtos
+      const novaListaCompras = [...this.state.listaDeCompras, {...produtoEscolhido, quantia:1}]
+      // e fazemos uma copia da lista de compra, mas com nosso produto novo e o novo valor de quantia
+      this.setState({listaDeCompras: novaListaCompras})
     }
   }
 
-  onRemoveProductFromCart = (produtoId) => {
-    const newProductsInCart = this.state.cards.map((produto) => {
-      if(produto.id === produtoId) {
-        return {
-          ...produto,
-          quantity: produto.quantity - 1
+  removeItem = (id) => { //le a lista de compras atual
+    const carrinhoAtt = this.state.listaDeCompras.map((produto) => {
+      if (produto.id === id) { // o item clicado
+        return{
+          ...produto,  // retorna
+          quantia: produto.quantia -1 // com redução de -1 na quantia
         }
       }
       return produto
-    }).filter((produto) => produto.quantity > 0)
+    }).filter((produto) => produto.quantia > 0) //depois disso filtra a lista e só retorna os produtos que não estiverem com quantia zerada
 
-    this.setState({productsInCart: newProductsInCart})
+    this.setState({listaDeCompras: carrinhoAtt})
   }
- 
-  
 
   render(){
 
@@ -178,19 +167,23 @@ class App extends React.Component {
       return (
 
           <Cards
+          id = {card.id}
           fotoProduto = {card.fotoProduto}
           fotoEstampa ={card.fotoEstampa}
           descricao = {card.descricao}
           preco = {card.preco}
-          onAddProductToCart={this.onAddProductToCart}
+          adicionarItem={this.adicionarItem}
           />  
       )
     });
 
     return (
-      <MainContainer >
-        <Header/>
-        <Main >
+      <MainContainer>
+        <Header 
+          onClickCarrinho={this.onClickCarrinho}
+          carrinhoHeader={this.state.carrinhoHeader}
+        />
+        <Main>
           <Filtros
             precoMin= {this.state.precoMin}
             precoMaxn= {this.state.precoMax}
@@ -198,12 +191,13 @@ class App extends React.Component {
             updatePrecoMax={this.updatePrecoMax}
           />
           <CardContainer>
-            
             {listaFiltrada} 
           </CardContainer>
-          <Carrinho 
-          productInCart={this.state.cards}
-          onRemoveProductFromCart={this.onRemoveProductFromCart} />
+          <Carrinho
+            listaDeCompras={this.state.listaDeCompras}
+            removeItem={this.removeItem}
+            carrinhoHeader={this.state.carrinhoHeader}
+          />
         </Main>  
       </MainContainer>  
     );
