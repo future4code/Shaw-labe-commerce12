@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import lupa from "../img/lupa.png";
+import lupa from "../img/lupa1.png";
 import logo from "../img/logo.png";
-import login from "../img/user.png";
+import login from "../img/user1.png";
 import carrinho from "../img/carrinho.png";
 
 
@@ -13,7 +13,7 @@ const MainContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 100px;
-  background-color: #b8b8b7;
+  background-image:url(https://thumbs.dreamstime.com/b/cen%C3%A1rio-estrelado-de-espa%C3%A7o-wallpaper-c%C3%B3smico-profundo-amplo-cosmos-com-estrelas-brilhantes-belo-universo-constela%C3%A7%C3%A3o-textura-218573124.jpg);
   height: 100px;
 `
 
@@ -23,6 +23,7 @@ const LoginCarrinho = styled.div`
   align-items: center;
   width: 250px;
   margin-right: 15px;
+  color: white;
 
   div{
     display: flex;
@@ -108,7 +109,10 @@ class Header extends React.Component{
             </Login>
           </div>
           <button>
-            <img src={carrinho} alt="carrinho de compras" />
+            <img 
+            src={carrinho} 
+            alt="carrinho de compras"  
+            onClick={this.props.onClickCarrinho}/>
           </button>
         </LoginCarrinho>
       </MainContainer>

@@ -53,7 +53,8 @@ class Cards extends React.Component {
                     <p>{this.props.descricao} </p>
                     <p>R$ {this.props.preco}</p>
                 </div>
-                <button>Adicionar ao carrinho</button>
+                <button onClick={() => this.props.onAddProductToCart(this.props.produto.id)} >Adicionar ao carrinho</button>
+               
             </CardBox>
         )
     }
