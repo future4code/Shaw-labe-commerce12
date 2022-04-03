@@ -4,11 +4,11 @@ import Header from './Components/Header'
 
 import Carrinho from './Components/Carrinho'
 import Filtros from './Components/Filtros';
-import Cards from './Components/Cards'
-
-import {Carrinho} from './Components/Carrinho'
-import Filtros from './Components/filtro'
 import Cards from './Components/cards'
+
+// import {Carrinho} from './Components/Carrinho'
+// import Filtros from './Components/filtro'
+// import Cards from './Components/cards'
 
 import card1 from './img_cards/Card1.png'
 import estampaCard1 from './img_cards/Estampa_Card1.png'
@@ -152,6 +152,8 @@ class App extends React.Component {
     ],
     precoMin: "",
     precoMax: "",
+    inputPesquisar: "",
+    ordenacaoPreco: "",
 
     carrinhoHeader: false,
   }
@@ -161,9 +163,7 @@ class App extends React.Component {
     // console.log(this.state.carrinhoHeader)
   }
 
-    inputPesquisar: "",
-    ordenacaoPreco: "",
-  };
+  // };
 
 
   updatePrecoMin = (dig) => {
@@ -212,7 +212,7 @@ class App extends React.Component {
     this.setState({listaDeCompras: carrinhoAtt})
   }
 
-  render(){
+  // render(){
 
   updatePesquisar = (dig) => {
     this.setState({ inputPesquisar: dig.target.value });
@@ -220,7 +220,7 @@ class App extends React.Component {
 
 
   updateOrdenacaoPreco = (event) => {
-    this.setState({ ordenacaoPreco: event.target.value})
+    this.setState({ ordenacaoPreco: event.target.value});
   }
 
   render() {
@@ -257,30 +257,33 @@ class App extends React.Component {
           adicionarItem={this.adicionarItem}
           />  
       )
-    });
+    })
+
+    // return (
+      // <MainContainer>
+      //   {/* <Header 
+      //     onClickCarrinho={this.onClickCarrinho}
+      //     carrinhoHeader={this.state.carrinhoHeader} */}
+      //   {/* />
+
+      //       fotoProduto={card.fotoProduto}
+      //       fotoEstampa={card.fotoEstampa}
+      //       descricao={card.descricao}
+      //       preco={card.preco}
+      //     /> */}
+      //   );
+      // });
+
+      // console.log(this.state.ordenacaoPreco)
 
     return (
-      <MainContainer>
-        <Header 
-          onClickCarrinho={this.onClickCarrinho}
-          carrinhoHeader={this.state.carrinhoHeader}
-        />
-
-            fotoProduto={card.fotoProduto}
-            fotoEstampa={card.fotoEstampa}
-            descricao={card.descricao}
-            preco={card.preco}
-          />
-        );
-      });
-
-      console.log(this.state.ordenacaoPreco)
-
-    return (
+      
       <MainContainer>
         <Header
           inputPesquisar={this.state.inputPesquisar}
           updatePesquisar={this.updatePesquisar}
+          onClickCarrinho={this.onClickCarrinho}
+          carrinhoHeader={this.state.carrinhoHeader}
         />
         <OrdenacaoPreco 
           ordenacaoPreco={this.state.ordenacaoPreco}
@@ -304,14 +307,15 @@ class App extends React.Component {
             carrinhoHeader={this.state.carrinhoHeader}
           />
         </Main>  
-      </MainContainer>  
+        <CardContainer>{listaFiltrada}</CardContainer>
+      </MainContainer> 
 
-          <CardContainer>{listaFiltrada}</CardContainer>
-        </Main>
-      </MainContainer>
+    //     </Main>
+    // </MainContainer>
 
-    );
+    )
   }
 }
+
 
 export default App;
