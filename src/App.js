@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
-import Header from './Components/Header'
-
-import Carrinho from './Components/Carrinho'
-import Filtros from './Components/Filtros';
-import Cards from './Components/cards'
+import Header from './components/Header'
+import Carrinho from './components/Carrinho'
+import Filtros from './components/Filtros'
+import Cards from './components/cards'
+import OrdenacaoPreco from './components/OrdenacaoPreco'
 
 // import {Carrinho} from './Components/Carrinho'
 // import Filtros from './Components/filtro'
@@ -16,7 +16,6 @@ import card2 from './img_cards/Card2.png'
 import estampaCard2 from './img_cards/Estampa_Card2.png'
 import card3 from './img_cards/Card3.png'
 import estampaCard3 from './img_cards/Estampa_Card3.png'
-import OrdenacaoPreco from './Components/OrdenacaoPreco';
 
 
 const MainContainer = styled.div`
@@ -49,25 +48,17 @@ class App extends React.Component {
         id:1,
         fotoProduto: card1,
         fotoEstampa: estampaCard1,
-
         descricao:'Astronauta Triangulo',
         preco:80,
-
-        descricao: "Camiseta Branca Astronauta - Masculina",
-        preco: "100",
-
       },
       {
         id:2,
         fotoProduto: card2,
         fotoEstampa: estampaCard2,
-
         descricao:'Astronauta Balão',
         preco:81,
-
         descricao: "Camiseta Branca Astronauta - Feminina",
         preco: "81",
-
       },
       {
         id:3,
